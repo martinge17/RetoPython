@@ -53,19 +53,20 @@ def main():
     try:
         index = 0
         download = get_download_directory()
-        if download is not None and isinstance(download, Path) and download.is_dir():
+        if download is not None and download.is_dir():
             print(f"\nDirectory: {download}\n")
             # List just jpeg/jpg files
             for f_ile in [x for x in download.iterdir() if not x.is_dir()]:
-                # print(f_ile.name)
-                mt = mimetypes.guess_type(f_ile.name)
 
-                if mt[0] == "image/jpeg":
-                    if index % 2 == 0:
-                        print(index, f' -> "{f_ile.name}"')
-                    else:
-                        print(index, f_ile.name)
-                    index += 1
+                if f_ile.is_file():
+                    mt = mimetypes.guess_type(f_ile.name)
+
+                    if mt[0] == "image/jpeg":
+                        if index % 2 == 0:
+                            print(index, f' -> "{f_ile.name}"')
+                        else:
+                            print(index, f_ile.name)
+                        index += 1
 
     except Exception as exception:
         print(exception)
